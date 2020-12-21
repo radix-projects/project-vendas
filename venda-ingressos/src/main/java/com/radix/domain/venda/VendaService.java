@@ -23,13 +23,12 @@ public class VendaService {
     public Venda gerar(Venda venda) {
 
         log.info("Gerando nova venda");
-        venda.setId(new Random().nextLong());
         venda.setStatus("EM_PROCESSO");
         venda.setOperacao(new Random().nextLong());
         venda.setValorTotal(new BigDecimal(venda.getQuantidadeIngressos() * 150));
 
         log.info("Disponibilizando nova venda.");
-        kafkaDispatcher.send(TOPIC_NOVA_VENDA, venda.getId().toString(), new CorrelationId(VendaService.class.getSimpleName()), venda);
+        kafkaDispatcher.send(TOPIC_NOVA_VENDA, venda.getOperacao().toString(), new CorrelationId(VendaService.class.getSimpleName()), venda);
 
         return venda;
     }

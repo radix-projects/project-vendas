@@ -1,12 +1,10 @@
 package com.radix.resource;
 
-import com.radix.application.event.ResourceCreateEvent;
 import com.radix.domain.venda.Venda;
 import com.radix.domain.venda.VendaService;
 import com.radix.resource.convert.VendaConverter;
 import com.radix.resource.request.VendaRequest;
 import com.radix.resource.response.VendaResponse;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,18 +21,15 @@ public class VendaResource {
 
     private final VendaService vendaService;
     private final VendaConverter vendaConverter;
-    private final ApplicationEventPublisher publisher;
 
-    public VendaResource(VendaService vendaService, VendaConverter vendaConverter, ApplicationEventPublisher publisher) {
+    public VendaResource(VendaService vendaService, VendaConverter vendaConverter) {
         this.vendaService = vendaService;
         this.vendaConverter = vendaConverter;
-        this.publisher = publisher;
     }
 
     @PostMapping
     public ResponseEntity<VendaResponse> gerar(@Valid @RequestBody VendaRequest vendaRequest, HttpServletResponse response) {
         Venda venda = vendaService.gerar(vendaConverter.convertDomain(vendaRequest));
-        this.publisher.publishEvent(new ResourceCreateEvent(this, response, venda.getId()));
         return ResponseEntity.status(HttpStatus.CREATED).body(vendaConverter.convertDto(venda));
     }
 

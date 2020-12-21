@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 @Log
 public class Venda {
 
-    private Long id;
+    private String id;
     private Long operacao;
     private Long cliente;
     private Integer quantidadeIngressos;
