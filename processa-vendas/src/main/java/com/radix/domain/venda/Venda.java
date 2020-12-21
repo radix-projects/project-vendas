@@ -1,9 +1,6 @@
 package com.radix.domain.venda;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.extern.java.Log;
 
 import java.math.BigDecimal;
@@ -12,13 +9,15 @@ import java.math.BigDecimal;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Log
 public class Venda {
 
-    private Long id;
+    private String id;
     private Long operacao;
     private Long cliente;
     private Integer quantidadeIngressos;
     private BigDecimal valorTotal;
     private String status;
+
 }
